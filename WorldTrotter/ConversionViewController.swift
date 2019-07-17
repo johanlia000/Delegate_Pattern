@@ -4,7 +4,7 @@
 
 import UIKit
     // TODO: Mark the ViewController as conforming to the UITextFieldDelegate Protocol
-class ConversionViewController: UIViewController{ //, UITextFieldDelegate {
+class ConversionViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var celsiusLabel: UILabel!
     @IBOutlet var textField: UITextField!
@@ -25,6 +25,19 @@ class ConversionViewController: UIViewController{ //, UITextFieldDelegate {
         
         let existingTextHasDecimalSeparator = textField.text?.range(of: ".")
         let replacementTextHasDecimalSeparator = string.range(of: ".")
+        
+        // Doing the TODO
+        //let characterSet = NSCharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        let characterSet = NSCharacterSet.letters
+        if string.rangeOfCharacter(from: characterSet) != nil {
+            print("This is a character")
+            return false;
+            // this is the false part
+            // You can do something else and stopping and warning them that this
+            // is a letter rather than a number
+        }
+        // End of TODO
+        
         
         if existingTextHasDecimalSeparator != nil && replacementTextHasDecimalSeparator != nil {
             return false
@@ -65,7 +78,8 @@ class ConversionViewController: UIViewController{ //, UITextFieldDelegate {
         if let celsiusValue = celsiusValue {
             celsiusLabel.text = numberFormatter.string(from: NSNumber(value: celsiusValue.value))
         } else {
-            celsiusLabel.text = "???"
+            celsiusLabel.text = "?"
+            celsiusLabel.textColor = UIColor(displayP3Red: 0.60, green: 0.60, blue: 0.40, alpha: 1.0)
         }
     }
     // Limits the number of decimal places in the output label to 1
